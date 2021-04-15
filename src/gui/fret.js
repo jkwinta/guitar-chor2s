@@ -2,6 +2,13 @@ const WIDTH = 32;
 const HEIGHT = 40;
 
 const svgNamespace = 'http://www.w3.org/2000/svg';
+const svgAttributes = {
+    xmlns: svgNamespace,
+    height: HEIGHT,
+    width: WIDTH,
+    viewBox: `0 0 ${WIDTH} ${HEIGHT}`,
+};
+
 
 // List of [shapeName, attributes, toggleForFretting] items
 
@@ -19,9 +26,9 @@ const openElements = [
     [
         'circle',
         {
-            r: (WIDTH / 2) - 5,
-            cx: WIDTH / 2,
-            cy: (HEIGHT - Math.floor(HEIGHT / 5)) / 2,
+            r: Math.floor(WIDTH / 2) - 5,
+            cx: Math.floor(WIDTH / 2),
+            cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 5)) / 2),
             fill: 'none',
             stroke: 'RED',
             'stroke-width': 5,
@@ -30,11 +37,62 @@ const openElements = [
     ],
 ];
 
-const regularElements = [];
+const regularElements = [
+    [
+        'rect',
+        {
+            height: Math.floor(HEIGHT / 10),
+            width: WIDTH,
+            x: 0,
+            y: HEIGHT - Math.floor(HEIGHT / 10),
+        },
+        false,
+    ],
+    [
+        'rect',
+        {
+            height: HEIGHT,
+            width: Math.floor(WIDTH / 8),
+            x: Math.floor((WIDTH - Math.floor(WIDTH / 8)) / 2),
+            y: 0,
+        },
+        false,
+    ],
+    [
+        'circle',
+        {
+            cx: Math.floor(WIDTH / 2),
+            cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 10)) / 2),
+            r: Math.floor(WIDTH / 2) - 5,
+            fill: 'red',
+        },
+        true,
+    ]
+];
 
-const leftDotElements = [];
+const leftDotElements = regularElements.concat([
+    [
+        'circle',
+        {
+            cx: 0,
+            cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 10)) / 2),
+            r: 10,
+        },
+        false,
+    ]
+]).sort(([_n, _a, toggle]) => toggle);
 
-const rightDotElements = [];
+const rightDotElements = regularElements.concat([
+    [
+        'circle',
+        {
+            cx: WIDTH,
+            cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 10)) / 2),
+            r: 10,
+        },
+        false,
+    ]
+]).sort(([_n, _a, toggle]) => toggle);
 
 
 class Fret {
@@ -73,8 +131,12 @@ class Fret {
         let svg = this.newEmptySvg();
         if (this.type === 'OPEN') {
             this.addFretElements(svg, openElements);
+        } else if (this.type === 'LEFT') {
+            this.addFretElements(svg, leftDotElements);
+        } else if (this.type === 'RIGHT') {
+            this.addFretElements(svg, rightDotElements);
         } else {
-
+            this.addFretElements(svg, regularElements);
         }
         this.svg = svg;
     }
@@ -103,89 +165,3 @@ class Fret {
 
 
 }
-
-
-function newFret() {
-    let fret = document.createElement('div');
-    let s = newSvg();
-    s.appendChild(newCircle());
-    fret.appendChild(s);
-    return fret;
-}
-
-const svgAttributes = {
-    xmlns: 'http://www.w3.org/2000/svg',
-    height: HEIGHT,
-    width: WIDTH,
-    viewBox: `0 0 ${WIDTH} ${HEIGHT}`,
-};
-
-function newSvg() {
-    let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    for (let [a, v] of Object.entries(svgAttributes)) {
-        svg.setAttribute(a, v);
-    }
-    return svg;
-}
-
-function newCircle() {
-    let circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    let ca = {
-        r: '50',
-        cx: '50',
-        cy: '50',
-        fill: 'red',
-    };
-    for (let [a, v] of Object.entries(ca)) {
-        circle.setAttribute(a, v);
-    }
-    return circle;
-}
-
-function newRectangle() {
-    let a = {
-        x: '120',
-        y: '5',
-        width: '90',
-        height: '90',
-        stroke: 'blue',
-        fill: 'none'
-    };
-}
-
-// BAR FRETTED:
-bf = `<rect
-id="rect7"
-width="32"
-height="8"
-x="0"
-y="289"
-style="stroke-width:0.29840153" />
-<circle
-id="path9"
-cx="16"
-cy="273"
-style="fill:#0000ff;fill-opacity:1;stroke-width:0.61581236"
-r="10" />
-<circle
-id="path14"
-cx="16"
-cy="273"
-style="fill:#ffffff;fill-opacity:1;stroke-width:0.31146514;opacity:1"
-r="6" />`
-
-// reg
-r = `    <ns0:rect height="4" id="rect7" style="stroke-width:0.21100175" width="32" x="0" y="293" />
-<ns0:rect height="40" id="rect7-3" style="stroke-width:0.23590714" width="4" x="14" y="257" />
-<ns0:circle cx="16" cy="275" id="path9" r="8" style="fill:#0000ff;fill-opacity:1;stroke-width:0.61581236" />
-`
-
-leftCircle = `<circle
-id="path9"
-cx="32"
-cy="275"
-style="stroke-width:1.15617621"
-r="10" />`
-
-rightCircle = `<ns0:circle cx="-7.1054274e-15" cy="275" id="path9" r="10" style="stroke-width:1.15617621" />
-`
