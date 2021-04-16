@@ -8,10 +8,13 @@
 
 </html>
 <script src="src/gui/fret.js"></script>
+<script src="src/gui/fretboard.js"></script>
 <script>
     let d = document.querySelector("div");
-    let f = new Fret('OPEN');
-    d.appendChild(f.svg);
-    f.svg.onclick = () => f.toggleFretted();
+    // let f = new Fret('OPEN');
+    // let f = new Fret('REG');
+    let f = new Fretboard();
+    d.appendChild(f.table);
+    // f.svg.onclick = () => f.toggleFretted();
     // .appendChild(startPixelEditor({}));
 </script>

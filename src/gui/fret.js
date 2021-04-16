@@ -162,6 +162,4 @@ class Fret {
             this.fret();
         }
     }
-
-
 }
