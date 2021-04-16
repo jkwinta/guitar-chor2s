@@ -7,6 +7,7 @@ const svgAttributes = {
     height: HEIGHT,
     width: WIDTH,
     viewBox: `0 0 ${WIDTH} ${HEIGHT}`,
+    display: 'block'
 };
 
 
