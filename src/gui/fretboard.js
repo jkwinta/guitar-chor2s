@@ -29,6 +29,7 @@ class Fretboard {
         this.orientation = orientation;
         this.number_of_frets = number_of_frets;
         this.number_of_strings = number_of_strings;
+        this.decoration = new FretboardDecoration(number_of_strings);
         this.table = document.createElement('table');
         for (let [a, v] of Object.entries(fretboardAttributes)) {
             this.table.setAttribute(a, v);
@@ -43,12 +44,7 @@ class Fretboard {
                 fretsRow.setAttribute(a, v);
             }
             for (let j = 0; j < number_of_strings; j++) {
-                let fret;
-                if (i === 0) {
-                    fret = new Fret('OPEN');
-                } else {
-                    fret = new Fret();
-                }
+                let fret = new Fret(this.decoration.getDecoration(i, j));
                 fret.svg.onclick = () => fret.toggleFretted();
                 this.strings[j].push(fret);
                 let fretTd = document.createElement('td');

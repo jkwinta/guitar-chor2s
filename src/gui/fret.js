@@ -10,6 +10,7 @@ const svgAttributes = {
     display: 'block'
 };
 
+const colourSymbol = Symbol('colour');
 
 // List of [shapeName, attributes, toggleForFretting] items
 
@@ -31,7 +32,7 @@ const openElements = [
             cx: Math.floor(WIDTH / 2),
             cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 5)) / 2),
             fill: 'none',
-            stroke: 'RED',
+            stroke: colourSymbol,
             'stroke-width': 5,
         },
         true
@@ -65,7 +66,7 @@ const regularElements = [
             cx: Math.floor(WIDTH / 2),
             cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 10)) / 2),
             r: Math.floor(WIDTH / 2) - 5,
-            fill: 'red',
+            fill: colourSymbol,
         },
         true,
     ]
@@ -97,11 +98,13 @@ const rightDotElements = regularElements.concat([
 
 
 class Fret {
-    constructor(type) {
+    constructor(type, colour = 'black') {
         this.type = type;
+        this.colour = colour;
         this.svg = null;
         this.fretters = null;
         this.fretted = false;
+        this.colourElementAttributes = [];
         this.makeSvg();
     }
 
@@ -117,7 +120,12 @@ class Fret {
         for (let [name, attributes, hide] of elements) {
             let e = document.createElementNS(svgNamespace, name);
             for (let [a, v] of Object.entries(attributes)) {
-                e.setAttribute(a, v);
+                if (v === colourSymbol) {
+                    this.colourElementAttributes.push([e, a]);
+                    e.setAttribute(a, this.colour);
+                } else {
+                    e.setAttribute(a, v);
+                }
             }
             svg.appendChild(e);
             if (hide) {
@@ -162,5 +170,13 @@ class Fret {
         } else {
             this.fret();
         }
+    }
+
+    fretColour(colour) {
+        this.colour = colour;
+        this.colourElementAttributes.forEach(
+            ([element, attribute]) => element.setAttribute(attribute, this.colour)
+        );
+        this.fret();
     }
 }
