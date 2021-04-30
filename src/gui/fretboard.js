@@ -25,25 +25,25 @@ tdAttributes = {
 };
 
 class Fretboard {
-    constructor(orientation = 'V', number_of_frets = 21, number_of_strings = 6) {
+    constructor(orientation = 'V', numberOfFrets = 21, numberOfStrings = 6) {
         this.orientation = orientation;
-        this.number_of_frets = number_of_frets;
-        this.number_of_strings = number_of_strings;
-        this.decoration = new FretboardDecoration(number_of_strings);
+        this.numberOfFrets = numberOfFrets;
+        this.numberOfStrings = numberOfStrings;
+        this.decoration = new FretboardDecoration(numberOfStrings);
         this.table = document.createElement('table');
         for (let [a, v] of Object.entries(fretboardAttributes)) {
             this.table.setAttribute(a, v);
         }
         this.strings = [];
-        for (let j = 0; j < number_of_strings; j++) {
+        for (let j = 0; j < numberOfStrings; j++) {
             this.strings.push([]);
         }
-        for (let i = 0; i <= number_of_frets; i++) {
+        for (let i = 0; i <= numberOfFrets; i++) {
             let fretsRow = document.createElement('tr');
             for (let [a, v] of Object.entries(fretsRowAttributes)) {
                 fretsRow.setAttribute(a, v);
             }
-            for (let j = 0; j < number_of_strings; j++) {
+            for (let j = 0; j < numberOfStrings; j++) {
                 let fret = new Fret(this.decoration.getDecoration(i, j));
                 fret.svg.onclick = () => fret.toggleFretted();
                 this.strings[j].push(fret);

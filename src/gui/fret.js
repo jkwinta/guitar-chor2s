@@ -82,7 +82,7 @@ const leftDotElements = regularElements.concat([
         },
         false,
     ]
-]).sort(([_n, _a, toggle]) => toggle);
+]).sort(([_n, _a, toggle]) => toggle);  // Re-order toggle elements to be last
 
 const rightDotElements = regularElements.concat([
     [
@@ -98,7 +98,7 @@ const rightDotElements = regularElements.concat([
 
 
 class Fret {
-    constructor(type, colour = 'black') {
+    constructor(type, colour = 'blue') {
         this.type = type;
         this.colour = colour;
         this.svg = null;
