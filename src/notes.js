@@ -24,7 +24,7 @@ const NOTES = [
     ['A'],
     ['A#', 'Bb'],
     ['B'],
-]
+];
 
 // Index of natural notes:
 const NATURAL_VALUES = {}
@@ -152,10 +152,11 @@ class IntervalNote extends Note {
 }
 
 
-let n = new Note('C');
-for (let k in INTERVALS) {
-    console.log(String(n), k, String(new IntervalNote(n, k)));
-}
+// Testing:
+// let n = new Note('C');
+// for (let k in INTERVALS) {
+//     console.log(String(n), k, String(new IntervalNote(n, k)));
+// }
 
 // def degree_note_name(root_name, degree_name):
 //     if degree_name == 'ROOT':
