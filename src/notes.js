@@ -11,7 +11,7 @@ function mod(x, n) {
 }
 
 // The index is the given value for the note of 0-11
-const NOTES = [
+export const NOTES = [
     ['C'],
     ['C#', 'Db'],
     ['D'],
@@ -85,13 +85,11 @@ class Note {
         this.accidentals = accidentals != null ? accidentals : '';
         this.octave = octave;
         let value = NATURAL_VALUES[naturalName];
-        if (accidentals) {
-            for (let acc of accidentals) {
-                if (acc === '#') {
-                    value += 1;
-                } else if (acc === 'b') {
-                    value -= 1;
-                }
+        for (let acc of this.accidentals) {
+            if (acc === '#') {
+                value += 1;
+            } else if (acc === 'b') {
+                value -= 1;
             }
         }
         if (octave != null) {

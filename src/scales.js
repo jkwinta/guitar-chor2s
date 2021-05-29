@@ -1,4 +1,4 @@
-export const scales = {
+export const SCALES = {
     // pentatonic scales
     'MINOR PENTATONIC': [
         'ROOT', 'MINOR 3RD', 'PERFECT 4TH', 'PERFECT 5TH', 'MINOR 7TH'],
