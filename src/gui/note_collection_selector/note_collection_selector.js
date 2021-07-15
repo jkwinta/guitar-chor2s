@@ -1,6 +1,6 @@
-import { NOTES } from "../notes.js";
-import { SCALES } from '../scales.js';
-import { CHORDS } from '../chords.js';
+import { NOTES } from "../../notes.js";
+import { SCALES } from '../../scales.js';
+import { CHORDS } from '../../chords.js';
 
 const ROOT_NOTE_SELECTOR_GRID = [];
 for (let natural of 'CDEFGAB'.split('')) {

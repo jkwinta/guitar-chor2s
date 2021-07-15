@@ -1,0 +1,11 @@
+:root {
+    --fret-width: 32px;
+    --fret-height: 40px;
+}
+
+.fret {
+    height: var(--fret-width);
+    width: var(--fret-height);
+    /* view-box: 0 0 var(--fret-width) var(--fret-height); */
+    display: block;
+}

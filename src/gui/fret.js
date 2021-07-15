@@ -1,6 +1,14 @@
 const WIDTH = 32;
 const HEIGHT = 40;
 
+const NUT_HEIGHT = HEIGHT / 5;
+const CIRCLE_RADIUS = 0.9 * WIDTH / 2;
+// const CIRCLE_RADIUS = (WIDTH / 2) - 5;
+const FRET_HEIGHT = HEIGHT / 10;
+const STRING_WIDTH = WIDTH / 8;
+const DOT_RADIUS = WIDTH / 3;
+
+
 const svgNamespace = 'http://www.w3.org/2000/svg';
 const svgAttributes = {
     xmlns: svgNamespace,
@@ -10,9 +18,7 @@ const svgAttributes = {
     display: 'block'
 };
 
-const colourSymbol = Symbol('colour');
-
-// List of [shapeName, attributes, toggleForFretting] items
+// List of [shapeName, attributes, colourForFretting] items
 
 const openElements = [
     [
@@ -32,10 +38,9 @@ const openElements = [
             cx: Math.floor(WIDTH / 2),
             cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 5)) / 2),
             fill: 'none',
-            stroke: colourSymbol,
             'stroke-width': 5,
         },
-        true
+        'stroke'
     ],
 ];
 
@@ -66,9 +71,8 @@ const regularElements = [
             cx: Math.floor(WIDTH / 2),
             cy: Math.floor((HEIGHT - Math.floor(HEIGHT / 10)) / 2),
             r: Math.floor(WIDTH / 2) - 5,
-            fill: colourSymbol,
         },
-        true,
+        'fill',
     ]
 ];
 
@@ -110,9 +114,8 @@ class Fret {
 
     newEmptySvg() {
         let svg = document.createElementNS(svgNamespace, 'svg');
-        for (let [a, v] of Object.entries(svgAttributes)) {
-            svg.setAttribute(a, v);
-        }
+        svg.classList.push('fret');
+        Object.entries(svgAttributes).forEach(([a, v]) => svg.setAttribute(a, v));
         return svg;
     }
 
