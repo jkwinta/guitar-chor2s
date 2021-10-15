@@ -1,0 +1,8 @@
+.note {
+    width: 1em;
+}
+
+.selectedNote {
+    font-size: 150%;
+    color: blue;
+}

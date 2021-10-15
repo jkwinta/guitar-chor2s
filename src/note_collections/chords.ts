@@ -1,4 +1,4 @@
-export const CHORDS = {
+export const CHORDS: { [chordName: string]: string[] } = {
     '5': ['ROOT', 'PERFECT 5TH'],
     'MAJOR': ['ROOT', 'MAJOR 3RD', 'PERFECT 5TH'],
     'MINOR': ['ROOT', 'MINOR 3RD', 'PERFECT 5TH'],
