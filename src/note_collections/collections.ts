@@ -35,7 +35,7 @@ export class NamedNoteCollection {
     getByValue(value: number): NoteClass | null {
         value = mod12(value);
         if (this.noteCache[value] === undefined) {
-            this.noteCache[value] = this.notes.find(n => n.value == value) || null;
+            this.noteCache[value] = this.notes.find(n => n.value === value) || null;
         }
         return this.noteCache[value];
     }

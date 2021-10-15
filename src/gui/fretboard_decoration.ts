@@ -6,12 +6,12 @@ export class StandardFretboardDecoration {
     }
 
     getDecoration(fretNumber: number, stringIndex: number): string | null {
-        if (fretNumber == 0) {
+        if (fretNumber === 0) {
             return 'OPEN';
         }
-        if (this.numberOfStrings == 6) {
+        if (this.numberOfStrings === 6) {
             return this.getDecoration6(fretNumber, stringIndex);
-        } else if (this.numberOfStrings == 4) {
+        } else if (this.numberOfStrings === 4) {
             return this.getDecoration4(fretNumber, stringIndex);
         }
         return null;
@@ -19,9 +19,9 @@ export class StandardFretboardDecoration {
 
     getDecoration6(fretNumber: number, stringIndex: number): string | null {
         const numberOfDots = StandardFretboardDecoration.getNumberOfDots(fretNumber);
-        if (numberOfDots == 2) {
+        if (numberOfDots === 2) {
             return [null, 'RIGHT', 'LEFT', 'RIGHT', 'LEFT', null][stringIndex];
-        } else if (numberOfDots == 1) {
+        } else if (numberOfDots === 1) {
             return [null, null, 'RIGHT', 'LEFT', null, null][stringIndex];
         }
         return null;
@@ -29,9 +29,9 @@ export class StandardFretboardDecoration {
 
     getDecoration4(fretNumber: number, stringIndex: number): string | null {
         const numberOfDots = StandardFretboardDecoration.getNumberOfDots(fretNumber);
-        if (numberOfDots == 2) {
+        if (numberOfDots === 2) {
             return [null, 'RIGHT', 'LEFT', 'RIGHT', 'LEFT', null][stringIndex];
-        } else if (numberOfDots == 1) {
+        } else if (numberOfDots === 1) {
             return ['RIGHT', 'LEFT', 'RIGHT', 'LEFT'][stringIndex];
         }
         return null;
@@ -42,7 +42,7 @@ export class StandardFretboardDecoration {
         const mod12 = fretNumber % 12;
         if (mod12 === 0) {
             return 2;
-        } else if ((fretNumber % 2 == 1) && (mod12 % 10 != 1)) {
+        } else if ((fretNumber % 2 === 1) && (mod12 % 10 !== 1)) {
             // Odd fret number but not 1 or 11
             return 1;
         }

@@ -1,6 +1,6 @@
 import Fret from "./fret";
 import { Tuning, DEFAULT_TUNING } from '../../tunings';
-import { NamedNoteCollection, NoteCollection } from "../../note_collections/collections";
+import { NamedNoteCollection } from "../../note_collections/collections";
 import { StandardFretboardDecoration } from "../fretboard_decoration";
 
 // const orientation = 'V';
@@ -19,8 +19,6 @@ function FretRowDisplay(props) {
                 decoration={DECORATION.getDecoration(fretNumber, stringIndex)}
                 value={fretter(TUNING.getValue(stringIndex, fretNumber))}
             />
-                {/* <div>{String(noteCollection.containsValue(TUNING.getValue(stringIndex, fretNumber)))}</div> */}
-                {/* <div>{String(noteCollection)}</div> */}
             </td>
         })}
     </tr>);
@@ -33,11 +31,11 @@ export default function FretboardDisplay(props) {
         noteCollection = new NamedNoteCollection(
             props.rootNoteName, props.collectionType, props.collectionName);
         fretter = (v) => noteCollection.containsValue(v);
-    } 
+    }
     return (
         <div>
             <div>{String(noteCollection)}</div>
-            <table>
+            <table cellspacing="0" cellpadding="0">
                 {Array(NUMBER_OF_FRETS + 1).fill().map((_, fretNumber) => {
                     return <FretRowDisplay
                         fretNumber={fretNumber}
