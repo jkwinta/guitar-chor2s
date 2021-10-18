@@ -2,6 +2,7 @@ import Fret from "./fret";
 import { Tuning, DEFAULT_TUNING } from '../../tunings';
 import { NamedNoteCollection } from "../../note_collections/collections";
 import { StandardFretboardDecoration } from "../fretboard_decoration";
+import { Legend, RenderLegend } from "./legend";
 
 // const orientation = 'V';
 const NUMBER_OF_FRETS = 22;
@@ -15,10 +16,11 @@ function FretRowDisplay(props) {
 
     return (<tr>
         {Array(NUMBER_OF_STRINGS).fill().map((_, stringIndex) => {
-            return <td><Fret
-                decoration={DECORATION.getDecoration(fretNumber, stringIndex)}
-                value={fretter(TUNING.getValue(stringIndex, fretNumber))}
-            />
+            return <td key={stringIndex}>
+                <Fret
+                    decoration={DECORATION.getDecoration(fretNumber, stringIndex)}
+                    value={fretter(TUNING.getValue(stringIndex, fretNumber))}
+                />
             </td>
         })}
     </tr>);
@@ -27,21 +29,33 @@ function FretRowDisplay(props) {
 export default function FretboardDisplay(props) {
     let noteCollection = null;
     let fretter = (v) => false;
+    let legend = null;
+    let legendItems = [];
     if (props.rootNoteName && props.collectionType && props.collectionName) {
         noteCollection = new NamedNoteCollection(
             props.rootNoteName, props.collectionType, props.collectionName);
-        fretter = (v) => noteCollection.containsValue(v);
+        legend = new Legend(noteCollection);
+        legendItems = legend.toRender();
+        fretter = (v) => legend.getColour(noteCollection.getIntervalByValue(v));
     }
     return (
         <div>
-            <div>{String(noteCollection)}</div>
-            <table cellspacing="0" cellpadding="0">
-                {Array(NUMBER_OF_FRETS + 1).fill().map((_, fretNumber) => {
-                    return <FretRowDisplay
-                        fretNumber={fretNumber}
-                        fretter={fretter}
-                    />;
-                })}
+            <table>
+                <tr>
+                    <td>
+                        <div>{String(noteCollection)}</div>
+                        <table cellSpacing="0" cellPadding="0">
+                            {Array(NUMBER_OF_FRETS + 1).fill().map((_, fretNumber) => {
+                                return <FretRowDisplay key={fretNumber}
+                                    fretNumber={fretNumber}
+                                    fretter={fretter}
+                                />;
+                            })}
+
+                        </table>
+                    </td>
+                    <td><RenderLegend items={legendItems} /></td>
+                </tr>
             </table>
         </div>);
 }

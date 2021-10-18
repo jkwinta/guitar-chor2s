@@ -40,6 +40,16 @@ export class NamedNoteCollection {
         return this.noteCache[value];
     }
 
+    getIntervalByValue(value: number): string | null {
+        value = mod12(value);
+        for (let i = 0; i < this.notes.length; i++) {
+            if (this.notes[i].value === value) {
+                return this.intervals[i];
+            }
+        }
+        return null;
+    }
+
     containsValue(value: number): boolean {
         return this.getByValue(value) != null;
     }
