@@ -1,5 +1,4 @@
-const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
-
+export const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
 const WIDTH = 28;
 const HEIGHT = 40;
@@ -10,8 +9,10 @@ const OPEN_STROKE_FRACT = 3 / 8;
 
 const FRET_WIRE_HEIGHT_FRACT = 1 / 10;
 const STRING_WIDTH_FRACT = 1 / 8;
-const DOT_WIDTH_FRACT = 3 / 8;
-const PIP_WIDTH_FRACT = 1 / 3;
+const DOT_WIDTH_FRACT = 6 / 8;
+const PIP_WIDTH_FRACT = 2 / 3;
+
+export const PIP_RADIUS = WIDTH * PIP_WIDTH_FRACT / 2;
 
 const SVG_ATTRS = {
     xmlns: SVG_NAMESPACE,
@@ -67,13 +68,12 @@ function FretString(props) {
         y="0"
     />;
 }
-
 function Pip(props) {
     const value = props.value;
     return <circle
         cx={WIDTH / 2}
         cy={HEIGHT * (1 - FRET_WIRE_HEIGHT_FRACT) / 2}
-        r={WIDTH * PIP_WIDTH_FRACT}
+        r={PIP_RADIUS}
         fill={value}
         visibility={value ? 'visible' : 'hidden'}
     />;
@@ -83,14 +83,14 @@ function LeftCircle(props) {
     return <circle
         cx="0"
         cy={HEIGHT * (1 - FRET_WIRE_HEIGHT_FRACT) / 2}
-        r={WIDTH * DOT_WIDTH_FRACT} />;
+        r={WIDTH * DOT_WIDTH_FRACT / 2} />;
 }
 
 function RightCircle(props) {
     return <circle
         cx={WIDTH}
         cy={HEIGHT * (1 - FRET_WIRE_HEIGHT_FRACT) / 2}
-        r={WIDTH * DOT_WIDTH_FRACT} />;
+        r={WIDTH * DOT_WIDTH_FRACT / 2} />;
 }
 
 function LeftCircleFret(props) {

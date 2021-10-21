@@ -1,4 +1,5 @@
 import { NamedNoteCollection } from "../../note_collections/collections";
+import { PIP_RADIUS } from "./fret";
 // import { shuffle } from "../../util";
 
 const COLOURS: string[] = [
@@ -46,10 +47,22 @@ interface ColourDorProps {
     colour: string,
 }
 
+const VIEW_SIZE = PIP_RADIUS * 3;
+
 function ColourDot(props: ColourDorProps) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" display="block">
-            <circle cx="12" cy="12" r="8" fill={props.colour} />
+        <svg xmlns="http://www.w3.org/2000/svg"
+            height={VIEW_SIZE}
+            width={VIEW_SIZE}
+            viewBox={`0 0 ${VIEW_SIZE} ${VIEW_SIZE}`}
+            display="block"
+        >
+            <circle
+                cx={VIEW_SIZE / 2}
+                cy={VIEW_SIZE / 2}
+                r={PIP_RADIUS}
+                fill={props.colour}
+            />
         </svg>);
 }
 

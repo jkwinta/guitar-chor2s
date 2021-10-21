@@ -44,7 +44,7 @@ export default function FretboardDisplay(props) {
             <table><tbody>
                 <tr>
                     <td>
-                        <div>{String(noteCollection)}</div>
+                        <div>{noteCollection != null ? String(noteCollection) : ''}</div>
                         <table cellSpacing="0" cellPadding="0"><tbody>
                             {Array(NUMBER_OF_FRETS + 1).fill().map((_, fretNumber) => {
                                 return <FretRowDisplay key={fretNumber}
