@@ -28,7 +28,7 @@ export default class ChooseAndDisplayCollection extends React.Component {
     render() {
         return (
             <div>
-                <table>
+                <table><tbody>
                     <tr>
                         <td>
                             <NoteSelector
@@ -42,7 +42,7 @@ export default class ChooseAndDisplayCollection extends React.Component {
                             />
                             <CollectionSelector
                                 setter={(col) => this.setState({ collectionName: col })}
-                                selected={this.state.collectionName}
+                                selected={this.state.collectionName || ''}
                                 options={Object.keys(collections[this.state.collectionType] || {})}
                             />
                         </td>
@@ -54,7 +54,7 @@ export default class ChooseAndDisplayCollection extends React.Component {
                             />
                         </td>
                     </tr>
-                </table>
+                </tbody></table>
             </div>
         );
     }

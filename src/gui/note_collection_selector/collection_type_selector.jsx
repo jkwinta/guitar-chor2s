@@ -1,14 +1,14 @@
 export default function CollectionTypeSelector(props) {
-    return (<table>
+    return (<table><tbody>
         <tr>
             {props.options.map(collection => (
-                <td>
+                <td key={collection}>
                     <label onClick={() => props.setter(collection)}>
-                        <input type="radio" value={collection} checked={props.selected === collection} />
+                        <input type="radio" value={collection} checked={props.selected === collection} readOnly />
                         {collection}
                     </label>
                 </td>
             ))}
         </tr>
-    </table>);
+    </tbody></table>);
 }

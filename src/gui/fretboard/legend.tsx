@@ -3,17 +3,18 @@ import { shuffle } from "../../util";
 
 const COLOURS: string[] = [
     'red',
-    'purple',
-    'fuchsia',
     'green',
-    'yellow',
     'blue',
-    'teal',
-    'aqua',
+    'cyan',
+    'magenta',
+    'yellow',
     'orange',
-    'darkgoldenrod',
-    'silver',
+
     'purple',
+    'teal',
+
+    'aqua',
+    'silver',
     'indigo',
     'violet',
     'brown',
@@ -26,10 +27,9 @@ export class Legend {
 
     constructor(noteCollection: NamedNoteCollection) {
         this.noteCollection = noteCollection;
-        const colours = shuffle(COLOURS).slice(0, noteCollection.intervals.length);
         this.colourMap = {};
-        for (let i = 0; i < colours.length; i++) {
-            this.colourMap[noteCollection.intervals[i]] = colours[i];
+        for (let i = 0; i < COLOURS.length; i++) {
+            this.colourMap[noteCollection.intervals[i]] = COLOURS[i];
         }
     }
 
@@ -59,7 +59,7 @@ interface RenderLegendProps {
 
 export function RenderLegend(props: RenderLegendProps) {
     return (<table>
-        {props.items.map(([colour, interval]) => <tr key="interval">
+        {props.items.map(([colour, interval]) => <tr key={interval}>
             <td><ColourDot colour={colour} /></td>
             <td>{interval}</td>
         </tr>)}

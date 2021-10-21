@@ -12,15 +12,15 @@ const ROOT_NOTE_SELECTOR_GRID = [
 
 export default function NoteSelector(props) {
     return (
-        <table>
+        <table><tbody>
             {ROOT_NOTE_SELECTOR_GRID.map(
-                r => <tr>
-                    {r.map(n => <td
+                row => <tr key={row[1]}>
+                    {row.map(n => <td key={n}
                         className={'note' + (props.selected === n ? ' selectedNote' : '')}
                         onClick={() => { if (n !== null) { props.setter(n) } }}
                     >{n || ''}</td>)}
                 </tr>
             )}
-        </table>
+        </tbody></table>
     );
 }

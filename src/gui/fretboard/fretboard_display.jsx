@@ -5,7 +5,8 @@ import { StandardFretboardDecoration } from "../fretboard_decoration";
 import { Legend, RenderLegend } from "./legend";
 
 // const orientation = 'V';
-const NUMBER_OF_FRETS = 22;
+// const NUMBER_OF_FRETS = 22;
+const NUMBER_OF_FRETS = 18;
 const NUMBER_OF_STRINGS = 6;
 const TUNING = new Tuning(DEFAULT_TUNING);
 const DECORATION = new StandardFretboardDecoration(NUMBER_OF_STRINGS);
@@ -28,7 +29,7 @@ function FretRowDisplay(props) {
 
 export default function FretboardDisplay(props) {
     let noteCollection = null;
-    let fretter = (v) => false;
+    let fretter = (v) => null;
     let legend = null;
     let legendItems = [];
     if (props.rootNoteName && props.collectionType && props.collectionName) {
@@ -40,23 +41,22 @@ export default function FretboardDisplay(props) {
     }
     return (
         <div>
-            <table>
+            <table><tbody>
                 <tr>
                     <td>
                         <div>{String(noteCollection)}</div>
-                        <table cellSpacing="0" cellPadding="0">
+                        <table cellSpacing="0" cellPadding="0"><tbody>
                             {Array(NUMBER_OF_FRETS + 1).fill().map((_, fretNumber) => {
                                 return <FretRowDisplay key={fretNumber}
                                     fretNumber={fretNumber}
                                     fretter={fretter}
                                 />;
                             })}
-
-                        </table>
+                        </tbody></table>
                     </td>
                     <td><RenderLegend items={legendItems} /></td>
                 </tr>
-            </table>
+            </tbody></table>
         </div>);
 }
 
