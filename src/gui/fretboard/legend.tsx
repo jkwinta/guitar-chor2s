@@ -1,5 +1,5 @@
 import { NamedNoteCollection } from "../../note_collections/collections";
-import { shuffle } from "../../util";
+// import { shuffle } from "../../util";
 
 const COLOURS: string[] = [
     'red',
@@ -58,10 +58,10 @@ interface RenderLegendProps {
 }
 
 export function RenderLegend(props: RenderLegendProps) {
-    return (<table>
+    return (<table><tbody>
         {props.items.map(([colour, interval]) => <tr key={interval}>
             <td><ColourDot colour={colour} /></td>
             <td>{interval}</td>
         </tr>)}
-    </table>);
+    </tbody></table>);
 }

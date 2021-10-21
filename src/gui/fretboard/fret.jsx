@@ -30,77 +30,86 @@ function Nut(props) {
     />;
 }
 
-function OpenFret(props) {
+function OpenPip(props) {
     const value = props.value;
+    return <circle
+        cx={WIDTH / 2}
+        cy={HEIGHT * (1 - NUT_FRACT) / 2}
+        r={WIDTH * OPEN_TOTAL_FRACT * (1 - OPEN_STROKE_FRACT) / 2}
+        strokeWidth={WIDTH * OPEN_TOTAL_FRACT * OPEN_STROKE_FRACT / 2}
+        fill="none"
+        stroke={value}
+        visibility={value ? 'visible' : 'hidden'}
+    />;
+}
+
+function OpenFret(props) {
     return (<svg {...SVG_ATTRS}>
         <Nut />
-        <circle
-            cx={WIDTH / 2}
-            cy={HEIGHT * (1 - NUT_FRACT) / 2}
-            r={WIDTH * OPEN_TOTAL_FRACT * (1 - OPEN_STROKE_FRACT) / 2}
-            strokeWidth={WIDTH * OPEN_TOTAL_FRACT * OPEN_STROKE_FRACT / 2}
-            fill="none"
-            stroke={value}
-            visibility={value ? 'visible' : 'hidden'}
-        />
+        <OpenPip value={props.value} />
     </svg>);
 }
 
-function LeftFret(props) {
+function FretWire(props) {
+    return <rect
+        height="4"
+        width="32"
+        x="0"
+        y="36"
+    />;
+}
+
+function FretString(props) {
+    return <rect
+        height="40"
+        width="4"
+        x="14"
+        y="0"
+    />;
+}
+
+function Pip(props) {
     const value = props.value;
-    return (<svg xmlns={SVG_NAMESPACE}
-        height={HEIGHT}
-        width={WIDTH}
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        display="block"
-    >
-        <rect
-            height="4"
-            width="32"
-            x="0"
-            y="36"
-        />
-        <rect height="40" width="4" x="14" y="0" />
-        <circle cx="0" cy="18" r="10" />
-        <circle cx="16" cy="18" r="8"
-            fill={value}
-            visibility={value ? 'visible' : 'hidden'}
-        />
+    return <circle
+        cx="16"
+        cy="18"
+        r="8"
+        fill={value}
+        visibility={value ? 'visible' : 'hidden'}
+    />;
+}
+
+function LeftCircle(props) {
+    return <circle cx="0" cy="18" r="10" />;
+}
+
+function RightCircle(props) {
+    return <circle cx="32" cy="18" r="10" />;
+}
+
+function LeftCircleFret(props) {
+    return (<svg {...SVG_ATTRS}>
+        <FretWire />
+        <LeftCircle />
+        <FretString />
+        <Pip value={props.value} />
     </svg>);
 }
 
-function RightFret(props) {
-    const value = props.value;
-    return (<svg xmlns={SVG_NAMESPACE}
-        height={HEIGHT}
-        width={WIDTH}
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        display="block"
-    >
-        <rect height="4" width="32" x="0" y="36" />
-        <rect height="40" width="4" x="14" y="0" />
-        <circle cx="32" cy="18" r="10" />
-        <circle cx="16" cy="18" r="8"
-            fill={value}
-            visibility={value ? 'visible' : 'hidden'}
-        />
+function RightCircleFret(props) {
+    return (<svg {...SVG_ATTRS}>
+        <FretWire />
+        <RightCircle />
+        <FretString />
+        <Pip value={props.value} />
     </svg>);
 }
 
 function RegularFret(props) {
-    const value = props.value;
-    return (<svg xmlns={SVG_NAMESPACE}
-        height={HEIGHT}
-        width={WIDTH}
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        display="block"
-    >
-        <rect height="4" width="32" x="0" y="36" />
-        <rect height="40" width="4" x="14" y="0" />
-        <circle cx="16" cy="18" r="8"
-            fill={value}
-            visibility={value ? 'visible' : 'hidden'}
-        />
+    return (<svg {...SVG_ATTRS}>
+        <FretWire />
+        <FretString />
+        <Pip value={props.value} />
     </svg>);
 }
 
@@ -109,9 +118,9 @@ export default function Fret(props) {
     if (decoration === 'OPEN') {
         return <OpenFret value={props.value} />;
     } else if (decoration === 'LEFT') {
-        return <LeftFret value={props.value} />;
+        return <LeftCircleFret value={props.value} />;
     } else if (decoration === 'RIGHT') {
-        return <RightFret value={props.value} />;
+        return <RightCircleFret value={props.value} />;
     } else {
         return <RegularFret value={props.value} />;
     }

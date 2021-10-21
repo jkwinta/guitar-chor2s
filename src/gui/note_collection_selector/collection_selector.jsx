@@ -5,7 +5,7 @@ export default function CollectionSelector(props) {
     return (
         <select size="10" value={props.selected} onChange={eventSetter} onClick={eventSetter}>
             {props.options.map(
-                o => <option value={o}>{titleCase(o)}</option>)}
+                o => <option key={o} value={o}>{titleCase(o)}</option>)}
         </select>
     );
 }
