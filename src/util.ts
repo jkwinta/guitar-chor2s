@@ -14,3 +14,16 @@ export function shuffle<T>(a: T[]): T[] {
     }
     return result;
 }
+
+export function zip(...lists: any[][]): any[][] {
+    const result = [];
+    const minLength = Math.min(...lists.map(l => l.length));
+    for (let i = 0; i < minLength; i++) {
+        if (lists.every(l => i in l)) {
+            result[i] = lists.map(l => l[i]);
+        } else {
+            break;
+        }
+    }
+    return result;
+}

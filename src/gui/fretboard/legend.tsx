@@ -29,7 +29,7 @@ export class Legend {
     constructor(noteCollection: NamedNoteCollection) {
         this.noteCollection = noteCollection;
         this.colourMap = {};
-        for (let i = 0; i < COLOURS.length; i++) {
+        for (let i = 0; i < noteCollection.intervals.length; i++) {
             this.colourMap[noteCollection.intervals[i]] = COLOURS[i];
         }
     }
