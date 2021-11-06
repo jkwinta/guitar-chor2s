@@ -8,7 +8,7 @@ import CollectionSelector from "./note_collection_selector/collection_selector";
 // import { NamedNoteCollection } from "../note_collections/collections";
 import { CHORDS } from '../note_collections/chords';
 import { Chord } from '../note_collections/collections';
-import { zip, uniqueValues, titleCase } from "../util";
+import { zip, uniqueValues, titleCase, numSum, numericalSorter } from "../util";
 
 function chordString(chord) {
     return String(chord).split(' ').slice(0, -1).join(' ');
@@ -91,7 +91,7 @@ export default class ChordCollector extends React.Component {
                 {tableData.slice(1).map((r, ri) =>
                     <tr key={ri}>
                         <th>{r[0]}</th>
-                        {r[1].map(i => <td key={i}>{titleCase(i || '---')}</td>)}
+                        {r[1].map((i, j) => <td key={j}>{titleCase(i || '---')}</td>)}
                     </tr>
                 )}
             </tbody>
@@ -121,7 +121,7 @@ export default class ChordCollector extends React.Component {
                             </div>
                             <div>
                                 <button
-                                // onClick={() => console.table(this.buildChordsTable())}
+                                    onClick={() => console.table(this.getChordsSum())}
                                 >Other</button>
                             </div>
                             <div>

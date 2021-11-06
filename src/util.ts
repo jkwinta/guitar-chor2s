@@ -37,3 +37,11 @@ export function uniqueValues<T>(list: T[]): T[] {
     }
     return result;
 }
+
+export function numericalSorter(a: number, b: number): number {
+    return a - b;
+}
+
+export function numSum(list: number[]): number {
+    return list.reduce((a, b) => a + b, 0);
+}
