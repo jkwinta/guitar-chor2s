@@ -9,6 +9,7 @@ import CollectionSelector from "./note_collection_selector/collection_selector";
 import { CHORDS } from '../note_collections/chords';
 import { Chord } from '../note_collections/collections';
 import { zip, uniqueValues, titleCase, numSum, numericalSorter } from "../util";
+import { getScalesFromChords } from '../note_collections/collection_matcher';
 
 function chordString(chord) {
     return String(chord).split(' ').slice(0, -1).join(' ');
@@ -29,6 +30,10 @@ export default class ChordCollector extends React.Component {
         if (!this.state.chords.some(c => c.equals(chord))) {
             this.setState({ chords: [...this.state.chords, chord] });
         }
+    }
+
+    deleteChord(chord) {
+        this.setState({ chords: this.state.chords.filter(c => !c.equals(chord)) });
     }
 
     getSelectedChord() {
@@ -68,7 +73,7 @@ export default class ChordCollector extends React.Component {
         const header = fullHeader.filter((_v, i) => indices.includes(i));
         const body = fullBody.map(
             r => r.filter((_v, i) => indices.includes(i))
-        ).map((r, i) => [chordString(this.state.chords[i]), r]);
+        ).map((r, i) => [this.state.chords[i], r]);
 
         return [header, ...body];
     }
@@ -90,8 +95,11 @@ export default class ChordCollector extends React.Component {
             <tbody>
                 {tableData.slice(1).map((r, ri) =>
                     <tr key={ri}>
-                        <th>{r[0]}</th>
+                        <th>{chordString(r[0])}</th>
                         {r[1].map((i, j) => <td key={j}>{titleCase(i || '---')}</td>)}
+                        <td>
+                            <button onClick={() => this.deleteChord(r[0])}>X</button>
+                        </td>
                     </tr>
                 )}
             </tbody>
@@ -119,19 +127,16 @@ export default class ChordCollector extends React.Component {
                                     disabled={!this.getSelectedChord()}
                                 >Add chord</button></p>
                             </div>
-                            <div>
-                                <button
-                                    onClick={() => console.table(this.getChordsSum())}
-                                >Other</button>
-                            </div>
-                            <div>
-                                {/* {this.renderChordsTable()} */}
-                            </div>
                         </td>
                     </tr>
                 </tbody></table>
                 <div>
                     {this.renderChordsTable()}
+                </div>
+                <div>
+                    <button
+                        onClick={() => (this.state.chords === 0) || console.log(getScalesFromChords(this.state.chords).slice(0, 10))}
+                    >Other</button>
                 </div>
             </div>
         );

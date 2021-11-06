@@ -45,3 +45,7 @@ export function numericalSorter(a: number, b: number): number {
 export function numSum(list: number[]): number {
     return list.reduce((a, b) => a + b, 0);
 }
+
+export function numProd(list: number[]): number {
+    return list.reduce((a, b) => a * b, 1);
+}
