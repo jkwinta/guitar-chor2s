@@ -1,6 +1,6 @@
 import { NamedNoteCollection } from "../../note_collections/collections";
 import { PIP_RADIUS } from "./fret";
-// import { shuffle } from "../../util";
+import { zip } from "../../util";
 
 const COLOURS: string[] = [
     'red',
@@ -38,8 +38,8 @@ export class Legend {
         return this.colourMap[interval];
     }
 
-    toRender(): [string, string][] {
-        return this.noteCollection.intervals.map(i => [this.colourMap[i], i]);
+    toRender(): string[][] {
+        return zip(COLOURS, this.noteCollection.intervals, this.noteCollection.notes);
     }
 }
 
@@ -67,14 +67,15 @@ function ColourDot(props: ColourDorProps) {
 }
 
 interface RenderLegendProps {
-    items: [string, string][],
+    items: string[][],
 }
 
 export function RenderLegend(props: RenderLegendProps) {
     return (<table><tbody>
-        {props.items.map(([colour, interval]) => <tr key={interval}>
+        {props.items.map(([colour, interval, note]) => <tr key={interval}>
             <td><ColourDot colour={colour} /></td>
             <td>{interval}</td>
+            <td>{String(note)}</td>
         </tr>)}
     </tbody></table>);
 }

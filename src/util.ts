@@ -27,3 +27,13 @@ export function zip(...lists: any[][]): any[][] {
     }
     return result;
 }
+
+export function uniqueValues<T>(list: T[]): T[] {
+    const result: T[] = [];
+    for (let item of list) {
+        if (item != null && !result.includes(item)) {
+            result.push(item);
+        }
+    }
+    return result;
+}
