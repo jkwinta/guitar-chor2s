@@ -15,7 +15,8 @@ export function shuffle<T>(a: T[]): T[] {
     return result;
 }
 
-export function zip<T>(...lists: T[][]): T[][] {
+
+export function zip(...lists: any[][]): any[][] {
     const result = [];
     const minLength = Math.min(...lists.map(l => l.length));
     for (let i = 0; i < minLength; i++) {
