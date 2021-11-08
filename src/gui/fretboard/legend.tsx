@@ -43,13 +43,13 @@ export class Legend {
     }
 }
 
-interface ColourDorProps {
+interface ColourDotProps {
     colour: string,
 }
 
 const VIEW_SIZE = PIP_RADIUS * 3;
 
-function ColourDot(props: ColourDorProps) {
+function ColourDot(props: ColourDotProps) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg"
             height={VIEW_SIZE}

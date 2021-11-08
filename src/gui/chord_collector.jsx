@@ -109,34 +109,32 @@ export default class ChordCollector extends React.Component {
     render() {
         return (
             <div>
-                <table><tbody>
-                    <tr>
-                        <td>
-                            <NoteSelector
-                                selected={this.state.rootNoteName}
-                                setter={n => this.setState({ rootNoteName: n })}
-                            />
-                            <CollectionSelector
-                                setter={(col) => this.setState({ collectionName: col })}
-                                selected={this.state.collectionName || ''}
-                                options={Object.keys(CHORDS)}
-                            />
-                            <div>{this.getSelectedChordString()}
-                                <p><button
-                                    onClick={() => this.addChord(this.getSelectedChord())}
-                                    disabled={!this.getSelectedChord()}
-                                >Add chord</button></p>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody></table>
-                <div>
-                    {this.renderChordsTable()}
+                <div style={{ float: 'left', margin: 0, }}>
+                    <NoteSelector
+                        selected={this.state.rootNoteName}
+                        setter={n => this.setState({ rootNoteName: n })}
+                    />
+                    <CollectionSelector
+                        setter={(col) => this.setState({ collectionName: col })}
+                        selected={this.state.collectionName || ''}
+                        options={Object.keys(CHORDS)}
+                    />
+                    <div>{this.getSelectedChordString()}
+                        <p><button
+                            onClick={() => this.addChord(this.getSelectedChord())}
+                            disabled={!this.getSelectedChord()}
+                        >Add chord</button></p>
+                    </div>
                 </div>
-                <div>
-                    <button
-                        onClick={() => (this.state.chords === 0) || console.log(getScalesFromChords(this.state.chords).slice(0, 10))}
-                    >Other</button>
+                <div style={{ float: 'left', margin: 0, }}>
+                    <div>
+                        {this.renderChordsTable()}
+                    </div>
+                    <div>
+                        <button
+                            onClick={() => (this.state.chords === 0) || console.log(getScalesFromChords(this.state.chords).slice(0, 10))}
+                        >Get scales</button>
+                    </div>
                 </div>
             </div>
         );

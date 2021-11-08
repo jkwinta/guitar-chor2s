@@ -15,7 +15,7 @@ export function shuffle<T>(a: T[]): T[] {
     return result;
 }
 
-export function zip(...lists: any[][]): any[][] {
+export function zip<T>(...lists: T[][]): T[][] {
     const result = [];
     const minLength = Math.min(...lists.map(l => l.length));
     for (let i = 0; i < minLength; i++) {
@@ -28,7 +28,7 @@ export function zip(...lists: any[][]): any[][] {
     return result;
 }
 
-export function uniqueValues<T>(list: T[]): T[] {
+export function uniqueValues<T>(list: (T | null)[]): T[] {
     const result: T[] = [];
     for (let item of list) {
         if (item != null && !result.includes(item)) {
@@ -48,4 +48,11 @@ export function numSum(list: number[]): number {
 
 export function numProd(list: number[]): number {
     return list.reduce((a, b) => a * b, 1);
+}
+
+export function range1(stop: number): number[] {
+    if (stop > 0) {
+        return Array(stop).fill(null).map((_v, i) => i);
+    }
+    return [];
 }
