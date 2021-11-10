@@ -2,7 +2,7 @@ import React from "react";
 // import NoteCollectionSelector from './note_collection_selector/note_collection_selector';
 // import FretboardDisplay from './fretboard/fretboard_display';
 
-import collections from "../note_collections/collections";
+import collections from "../note_collections/note_collections";
 
 import NoteSelector from "./note_collection_selector/note_selector";
 import CollectionTypeSelector from "./note_collection_selector/collection_type_selector";

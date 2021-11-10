@@ -1,4 +1,4 @@
-import { NamedNoteCollection } from "../../note_collections/collections";
+import { NamedNoteCollection } from "../../note_collections/note_collections";
 import { PIP_RADIUS } from "./fret";
 import { zip } from "../../util";
 import { NoteClass } from "../../notes";

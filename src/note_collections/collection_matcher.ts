@@ -1,4 +1,4 @@
-import { Chord, NamedNoteCollection, Scale } from './collections';
+import { Chord, NamedNoteCollection, Scale } from './note_collections';
 import { zip, numSum, uniqueValues, numProd, numericalSorter } from '../util';
 import { SCALES } from './scales';
 

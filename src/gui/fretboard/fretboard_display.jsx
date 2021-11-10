@@ -1,6 +1,6 @@
 import Fret from "./fret";
 import { Tuning, DEFAULT_TUNING } from '../../tunings';
-import { NamedNoteCollection } from "../../note_collections/collections";
+import { NamedNoteCollection } from "../../note_collections/note_collections";
 import { StandardFretboardDecoration } from "../fretboard_decoration";
 import { Legend, RenderLegend } from "./legend";
 
