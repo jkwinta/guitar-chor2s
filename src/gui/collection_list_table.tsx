@@ -1,6 +1,7 @@
 import { NamedNoteCollection } from "../note_collections/note_collections";
 // import { zip, uniqueValues, range1 } from '../util';
 import { CollectionCollection } from '../note_collections/collection_collection';
+import { shortenIntervalName } from '../intervals';
 
 
 interface CollectionListTableProps {
@@ -15,7 +16,7 @@ export function CollectionListTable(props: CollectionListTableProps) {
     }
     const c = new CollectionCollection(props.items);
     const tableData = c.buildTable();
-    return (<table>
+    return (<table style={{border: '3px solid purple'}}>
         <thead>
             <tr>
                 {tableData[0].map(
@@ -27,7 +28,7 @@ export function CollectionListTable(props: CollectionListTableProps) {
             {tableData.slice(1).map((r, ri) =>
                 <tr key={ri}>
                     <th>{r[0]}</th>
-                    {r.slice(1).map((v, i) => <td key={i}>{v}</td>)}
+                    {r.slice(1).map((v, i) => <td key={i}>{shortenIntervalName(v)}</td>)}
                     <td>
                         <button onClick={() => props.deleter(props.items[ri])}>X</button>
                     </td>

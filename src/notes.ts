@@ -1,3 +1,5 @@
+import { INTERVAL_SEMITONES } from './intervals';
+
 // About:
 // Notes are integers relative to C3, The note on the third fret of the A string
 // on a standard-tuned guitar, noting that guitar music is often written an
@@ -40,47 +42,6 @@ for (let i = 0; i < NOTES.length; i++) {
     }
 }
 
-// // The octave that the note belongs to
-// function octaveNumber(noteIndex: number): number {
-//     return Math.floor(noteIndex / 12) + 3;
-// }
-
-// function octaveOffset(octaveNumber: number): number {
-//     return 12 * (octaveNumber - 3)
-// }
-
-// // The name(s) of the note at the given index
-// function noteNames(noteIndex: number): string[] {
-//     return NOTES[mod12(noteIndex)];
-// }
-
-// function noteNameFromIndex(noteIndex: number): string {
-//     return `${noteNames(noteIndex)[0]}${octaveNumber(noteIndex)}`;
-// }
-
-const INTERVALS: { [intervalName: string]: number } = {
-    'ROOT': 0,
-    'MINOR 2ND': 1,
-    'MAJOR 2ND': 2,
-    'AUGMENTED 2ND': 3,
-    'MINOR 3RD': 3,
-    'MAJOR 3RD': 4,
-    'PERFECT 4TH': 5,
-    'AUGMENTED 4TH': 6,
-    'DIMINISHED 5TH': 6,
-    'PERFECT 5TH': 7,
-    'AUGMENTED 5TH': 8,
-    'MINOR 6TH': 8,
-    'MAJOR 6TH': 9,
-    'DIMINISHED 7TH': 9,
-    'MINOR 7TH': 10,
-    'MAJOR 7TH': 11,
-    'MAJOR 9TH': 14,
-    'PERFECT 11TH': 17,
-    'SHARP 11TH': 18,
-    'MAJOR 13th': 21,
-}
-
 const noteRegex: RegExp = /^([A-G])(#*|b*)((?:\+|-)?\d+)?$/;
 
 export class NoteClass {
@@ -116,7 +77,7 @@ export class NoteClass {
         if (intervalName === 'ROOT') {
             return this;
         }
-        const intervalSemitones = INTERVALS[intervalName];
+        const intervalSemitones = INTERVAL_SEMITONES[intervalName];
         if (!intervalSemitones) {
             throw Error(`No such interval: "${intervalName}"`);
         }
