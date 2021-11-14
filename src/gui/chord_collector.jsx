@@ -4,7 +4,7 @@ import React from "react";
 
 import NoteSelector from "./note_collection_selector/note_selector";
 import CollectionSelector from "./note_collection_selector/collection_selector";
-// import FretboardDisplay from "./fretboard/fretboard_display";
+import FretboardDisplay from "./fretboard/fretboard_display";
 // import { NamedNoteCollection } from "../note_collections/collections";
 import { CHORDS } from '../note_collections/chords';
 import { Chord } from '../note_collections/note_collections';
@@ -23,6 +23,7 @@ export default class ChordCollector extends React.Component {
             collectionName: null,
             chords: [],
             scales: [],
+            selectedCollection: null,
         };
     }
 
@@ -33,13 +34,27 @@ export default class ChordCollector extends React.Component {
     }
 
     deleteChord(chord) {
-        this.setState({ chords: this.state.chords.filter(c => !c.equals(chord)) });
+        const newChords = this.state.chords.filter(c => !c.equals(chord));
+        // Unselect if selected
+        if (this.state.selectedCollection != null && chord != null
+            && this.state.selectedCollection.equals(chord)) {
+            this.setState({ chords: newChords, selectedCollection: null });
+
+        } else {
+            this.setState({ chords: newChords });
+        }
     }
 
     deleteScale(scale) {
-        this.setState({ scales: this.state.scales.filter(s => !s.equals(scale)) });
+        const newScales = this.state.scales.filter(s => !s.equals(scale));
+        // Unselect if selected
+        if (this.state.selectedCollection != null && scale != null
+            && this.state.selectedCollection.equals(scale)) {
+            this.setState({ scales: newScales, selectedCollection: null });
+        } else {
+            this.setState({ scales: newScales });
+        }
     }
-
 
     getSelectedChord() {
         if (this.state.rootNoteName && this.state.collectionName) {
@@ -47,7 +62,6 @@ export default class ChordCollector extends React.Component {
         }
         return null;
     }
-
 
     getSelectedChordString() {
         const chord = this.getSelectedChord();
@@ -60,6 +74,15 @@ export default class ChordCollector extends React.Component {
     updateScales() {
         let newScales = this.state.chords.length > 0 ? getScalesFromChords(this.state.chords) : [];
         this.setState({ scales: newScales });
+    }
+
+    setSelectedCollection(collection) {
+        if (
+            this.state.selectedCollection != null && collection != null
+            && this.state.selectedCollection.equals(collection)) {
+            collection = null;
+        }
+        this.setState({ selectedCollection: collection });
     }
 
     render() {
@@ -87,6 +110,8 @@ export default class ChordCollector extends React.Component {
                         <CollectionListTable
                             items={this.state.chords}
                             deleter={(c) => this.deleteChord(c)}
+                            setter={(c) => this.setSelectedCollection(c)}
+                            selected={this.state.selectedCollection}
                         />
                     </div>
                     <div>
@@ -96,8 +121,15 @@ export default class ChordCollector extends React.Component {
                         <CollectionListTable
                             items={this.state.scales.slice(0, 10)}
                             deleter={(s) => this.deleteScale(s)}
+                            setter={(s) => this.setSelectedCollection(s)}
+                            selected={this.state.selectedCollection}
                         />
                     </div>
+                </div>
+                <div style={{ float: 'left', margin: 0, }}>
+                    <FretboardDisplay
+                        noteCollection={this.state.selectedCollection}
+                    />
                 </div>
             </div>
         );
