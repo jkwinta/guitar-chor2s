@@ -7,7 +7,7 @@ import { NoteClass, mod12 } from '../notes';
 export const SCALES_KEY = 'Scales';
 export const CHORDS_KEY = 'Chords';
 
-const collections = { [SCALES_KEY]: SCALES, [CHORDS_KEY]: CHORDS };
+const collections: { [collectionType: string]: { [collectionName: string]: string[] } } = { [SCALES_KEY]: SCALES, [CHORDS_KEY]: CHORDS };
 export default collections;
 
 export class NamedNoteCollection {

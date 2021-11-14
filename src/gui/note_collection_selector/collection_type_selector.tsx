@@ -1,4 +1,10 @@
-export default function CollectionTypeSelector(props) {
+interface CollectionTypeSelectorProps {
+    options: string[],
+    setter: (collection: string) => unknown,
+    selected: string | null,
+}
+
+export default function CollectionTypeSelector(props: CollectionTypeSelectorProps) {
     return (<table><tbody>
         <tr>
             {props.options.map(collection => (

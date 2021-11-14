@@ -1,16 +1,22 @@
 import React from "react";
-// import NoteCollectionSelector from './note_collection_selector/note_collection_selector';
-// import FretboardDisplay from './fretboard/fretboard_display';
 
-import collections from "../note_collections/note_collections";
+import collections, { NamedNoteCollection } from "../note_collections/note_collections";
 
 import NoteSelector from "./note_collection_selector/note_selector";
 import CollectionTypeSelector from "./note_collection_selector/collection_type_selector";
 import CollectionSelector from "./note_collection_selector/collection_selector";
 import FretboardDisplay from "./fretboard/fretboard_display";
 
-export default class ChooseAndDisplayCollection extends React.Component {
-    constructor(props) {
+interface ChooseAndDisplayCollectionProps { }
+interface ChooseAndDisplayCollectionState {
+    rootNoteName: string | null,
+    collectionType: string | null,
+    collectionName: string | null,
+}
+
+export default class ChooseAndDisplayCollection extends React.Component<
+    ChooseAndDisplayCollectionProps, ChooseAndDisplayCollectionState> {
+    constructor(props: ChooseAndDisplayCollectionProps) {
         super(props);
         this.state = {
             rootNoteName: null,
@@ -19,10 +25,27 @@ export default class ChooseAndDisplayCollection extends React.Component {
         };
     }
 
-    setCollectionType(newCollectionType) {
+    setCollectionType(newCollectionType: string) {
         if (this.state.collectionType !== newCollectionType) {
             this.setState({ collectionType: newCollectionType, collectionName: null });
         }
+    }
+
+    getCollectionSelectorOptions(): string[] {
+        if (this.state.collectionType != null) {
+            return Object.keys(collections[this.state.collectionType] || {});
+        }
+        return [];
+    }
+
+    getSelectedCollection(): NamedNoteCollection | null {
+        if (this.state.rootNoteName
+            && this.state.collectionType
+            && this.state.collectionName) {
+            return new NamedNoteCollection(
+                this.state.rootNoteName, this.state.collectionType, this.state.collectionName);
+        }
+        return null;
     }
 
     render() {
@@ -43,14 +66,12 @@ export default class ChooseAndDisplayCollection extends React.Component {
                             <CollectionSelector
                                 setter={(col) => this.setState({ collectionName: col })}
                                 selected={this.state.collectionName || ''}
-                                options={Object.keys(collections[this.state.collectionType] || {})}
+                                options={this.getCollectionSelectorOptions()}
                             />
                         </td>
                         <td>
                             <FretboardDisplay
-                                rootNoteName={this.state.rootNoteName}
-                                collectionType={this.state.collectionType}
-                                collectionName={this.state.collectionName}
+                                noteCollection={this.getSelectedCollection()}
                             />
                         </td>
                     </tr>

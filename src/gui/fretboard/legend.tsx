@@ -35,8 +35,10 @@ export class Legend {
         }
     }
 
-    getColour(interval: string): string | undefined {
-        return this.colourMap[interval];
+    getColour(interval: string | null): string | undefined {
+        if (interval) {
+            return this.colourMap[interval];
+        }
     }
 
     toRender(): [string, string, NoteClass][] {

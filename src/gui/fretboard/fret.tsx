@@ -22,7 +22,8 @@ const SVG_ATTRS = {
     display: "block",
 }
 
-function Nut(props) {
+
+function Nut(props: any) {
     return <rect
         height={HEIGHT * NUT_FRACT}
         width={WIDTH}
@@ -31,7 +32,11 @@ function Nut(props) {
     />;
 }
 
-function OpenPip(props) {
+interface PipProps {
+    value: string | undefined,
+}
+
+function OpenPip(props: PipProps) {
     const value = props.value;
     return <circle
         cx={WIDTH / 2}
@@ -44,14 +49,14 @@ function OpenPip(props) {
     />;
 }
 
-function OpenFret(props) {
+function OpenFret(props: PipProps) {
     return (<svg {...SVG_ATTRS}>
         <Nut />
         <OpenPip value={props.value} />
     </svg>);
 }
 
-function FretWire(props) {
+function FretWire(props: any) {
     return <rect
         height={HEIGHT * FRET_WIRE_HEIGHT_FRACT}
         width={WIDTH}
@@ -60,7 +65,7 @@ function FretWire(props) {
     />;
 }
 
-function FretString(props) {
+function FretString(props: any) {
     return <rect
         height={HEIGHT}
         width={WIDTH * STRING_WIDTH_FRACT}
@@ -68,7 +73,7 @@ function FretString(props) {
         y="0"
     />;
 }
-function Pip(props) {
+function Pip(props: PipProps) {
     const value = props.value;
     return <circle
         cx={WIDTH / 2}
@@ -79,21 +84,21 @@ function Pip(props) {
     />;
 }
 
-function LeftCircle(props) {
+function LeftCircle(props: any) {
     return <circle
         cx="0"
         cy={HEIGHT * (1 - FRET_WIRE_HEIGHT_FRACT) / 2}
         r={WIDTH * DOT_WIDTH_FRACT / 2} />;
 }
 
-function RightCircle(props) {
+function RightCircle(props: any) {
     return <circle
         cx={WIDTH}
         cy={HEIGHT * (1 - FRET_WIRE_HEIGHT_FRACT) / 2}
         r={WIDTH * DOT_WIDTH_FRACT / 2} />;
 }
 
-function LeftCircleFret(props) {
+function LeftCircleFret(props: PipProps) {
     return (<svg {...SVG_ATTRS}>
         <FretWire />
         <LeftCircle />
@@ -102,7 +107,7 @@ function LeftCircleFret(props) {
     </svg>);
 }
 
-function RightCircleFret(props) {
+function RightCircleFret(props: PipProps) {
     return (<svg {...SVG_ATTRS}>
         <FretWire />
         <RightCircle />
@@ -111,7 +116,7 @@ function RightCircleFret(props) {
     </svg>);
 }
 
-function RegularFret(props) {
+function RegularFret(props: PipProps) {
     return (<svg {...SVG_ATTRS}>
         <FretWire />
         <FretString />
@@ -119,7 +124,12 @@ function RegularFret(props) {
     </svg>);
 }
 
-export default function Fret(props) {
+interface FretProps {
+    decoration: string | null,
+    value: string | undefined,
+}
+
+export default function Fret(props: FretProps) {
     const decoration = props.decoration;
     if (decoration === 'OPEN') {
         return <OpenFret value={props.value} />;

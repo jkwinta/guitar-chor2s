@@ -1,22 +1,30 @@
 import React from "react";
 
-// import collections from "../note_collections/collections";
-
 import NoteSelector from "./note_collection_selector/note_selector";
 import CollectionSelector from "./note_collection_selector/collection_selector";
 import FretboardDisplay from "./fretboard/fretboard_display";
-// import { NamedNoteCollection } from "../note_collections/collections";
 import { CHORDS } from '../note_collections/chords';
-import { Chord } from '../note_collections/note_collections';
+import { Chord, NamedNoteCollection, Scale } from '../note_collections/note_collections';
 import { getScalesFromChords } from '../note_collections/collection_matcher';
 import { CollectionListTable } from './collection_list_table';
 
-function chordString(chord) {
+function chordString(chord: Chord): string {
     return String(chord).split(' ').slice(0, -1).join(' ');
 }
 
-export default class ChordCollector extends React.Component {
-    constructor(props) {
+interface ChordCollectorProps {
+}
+
+interface ChordCollectorState {
+    rootNoteName: string | null,
+    collectionName: string | null,
+    chords: Chord[],
+    scales: Scale[],
+    selectedCollection: NamedNoteCollection | null,
+}
+
+export default class ChordCollector extends React.Component<ChordCollectorProps, ChordCollectorState> {
+    constructor(props: any) {
         super(props);
         this.state = {
             rootNoteName: null,
@@ -27,13 +35,13 @@ export default class ChordCollector extends React.Component {
         };
     }
 
-    addChord(chord) {
-        if (!this.state.chords.some(c => c.equals(chord))) {
+    addChord(chord: Chord | null) {
+        if (chord != null && !this.state.chords.some(c => c.equals(chord))) {
             this.setState({ chords: [...this.state.chords, chord] });
         }
     }
 
-    deleteChord(chord) {
+    deleteChord(chord: Chord) {
         const newChords = this.state.chords.filter(c => !c.equals(chord));
         // Unselect if selected
         if (this.state.selectedCollection != null && chord != null
@@ -45,7 +53,7 @@ export default class ChordCollector extends React.Component {
         }
     }
 
-    deleteScale(scale) {
+    deleteScale(scale: Scale) {
         const newScales = this.state.scales.filter(s => !s.equals(scale));
         // Unselect if selected
         if (this.state.selectedCollection != null && scale != null
@@ -56,14 +64,14 @@ export default class ChordCollector extends React.Component {
         }
     }
 
-    getSelectedChord() {
+    getSelectedChord(): Chord | null {
         if (this.state.rootNoteName && this.state.collectionName) {
             return new Chord(this.state.rootNoteName, this.state.collectionName);
         }
         return null;
     }
 
-    getSelectedChordString() {
+    getSelectedChordString(): string {
         const chord = this.getSelectedChord();
         if (chord) {
             return chordString(chord);
@@ -76,7 +84,7 @@ export default class ChordCollector extends React.Component {
         this.setState({ scales: newScales });
     }
 
-    setSelectedCollection(collection) {
+    setSelectedCollection(collection: NamedNoteCollection | null) {
         if (
             this.state.selectedCollection != null && collection != null
             && this.state.selectedCollection.equals(collection)) {
