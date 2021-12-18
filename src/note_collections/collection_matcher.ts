@@ -1,6 +1,8 @@
 import { Chord, NamedNoteCollection, Scale } from './note_collections';
 import { zip, numSum, uniqueValues, numProd, numericalSorter } from '../util';
 import { SCALES } from './scales';
+import { CHORDS } from './chords';
+import { NOTES } from '../notes';
 
 function collectionMap(c: NamedNoteCollection): number[] {
     return c.intervalMap.map(x => x == null ? 0 : 1);
@@ -34,4 +36,21 @@ export function getScalesFromChords(chords: Chord[]): Scale[] {
         }
     }
     return allScales.sort((a, b) => -numericalSorter(scaleValue(a), scaleValue(b)));
+}
+
+
+export function getChordsFromChords(chords: Chord[]): Chord[] {
+    const chordSumMap = getChordsSum(chords);
+    const chordValue = (c: Chord) => {
+        const chordMap = collectionMap(c);
+        return dotProduct(chordMap, chordSumMap) / vectorNorm(chordMap);
+    };
+    const roots = uniqueValues(chords.map(c => c.rootNoteName).concat(NOTES.flat()));
+    const allChords = [];
+    for (let root of roots) {
+        for (let chordName of Object.keys(CHORDS)) {
+            allChords.push(new Chord(root, chordName));
+        }
+    }
+    return allChords.sort((a, b) => -numericalSorter(chordValue(a), chordValue(b)));
 }

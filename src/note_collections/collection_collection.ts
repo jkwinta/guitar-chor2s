@@ -2,7 +2,7 @@ import { NamedNoteCollection } from "./note_collections";
 import { zip, uniqueValues } from '../util';
 import { NOTES } from '../notes';
 
-const DEFAULT_TABLE_FILLER = '---'
+const DEFAULT_TABLE_FILLER = '-'
 
 export class CollectionCollection {
     items: NamedNoteCollection[];
